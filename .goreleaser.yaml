@@ -1,0 +1,61 @@
+# https://goreleaser.com/customization/hooks/?h=before#global-hooks
+before:
+  hooks:
+    # You may remove this if you don't use go modules.
+    - go mod tidy
+
+# https://goreleaser.com/customization/builds/?h=build+option
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    # binary:
+    # Binary name.
+    # Can be a path (e.g. `bin/app`) to wrap the binary in a directory.
+    # Default is the name of the project directory.
+    # name_of_binary
+
+# https://goreleaser.com/customization/release/?h=prerelease#github
+release:
+  prerelease: auto
+
+# https://goreleaser.com/customization/universalbinaries/?h=universal#macos-universal-binaries
+universal_binaries:
+  # Whether to remove the previous single-arch binaries from the artifact list.
+  # If left as false, your end release might have both several macOS archives:
+  # amd64, arm64 and all.
+  #
+  # Defaults to false.
+  - replace: true
+
+# https://goreleaser.com/customization/homebrew/?h=brew#homebrew-taps
+brews:
+  - # Name template of the recipe
+    # Default to project name
+    name: cli-template-for-human
+
+    # Your app's homepage.
+    # Default is empty.
+    homepage: "https://github.com/mindulle/cli-template-for-human"
+
+    # GitHub/GitLab repository to push the formula to
+    tap:
+      # Repository owner template. (templateable)
+      owner: mindulle
+      # Repository name. (templateable)
+      name: homebrew-mindulle
+
+    # Git author used to commit to the repository.
+    # Defaults are shown.
+    commit_author:
+      name: mindulle
+      email: mindullestudio@gmail.com
+
+# https://goreleaser.com/customization/checksum/?h=check#checksums
+checksum:
+  # You can change the name of the checksums file.
+  # Default is `{{ .ProjectName }}_{{ .Version }}_checksums.txt`.
+  name_template: "checksums.txt"
